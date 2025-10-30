@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ad Redirect Button</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f0f2f5;
+        }
+
+        .container {
+            background: linear-gradient(145deg, #ffffff, #f0f0f0);
+            padding: 40px 60px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 90%;
+        }
+
+        h1 {
+            color: #1a202c;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        p {
+            color: #4a5568;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+
+        /* Styling the Link to Look Like a Button */
+        .ad-button {
+            display: inline-block;
+            text-decoration: none;
+            background-color: #4CAF50; /* Green */
+            background-image: linear-gradient(to right, #4CAF50, #6cd470);
+            color: white;
+            padding: 15px 35px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.25rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
+            transform: scale(1);
+        }
+
+        .ad-button:hover {
+            background-color: #45a049;
+            background-image: linear-gradient(to right, #45a049, #5bc360);
+            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.6);
+            transform: scale(1.05);
+        }
+
+        .ad-button:active {
+            transform: scale(0.98);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .instruction {
+            margin-top: 40px;
+            padding: 15px;
+            background-color: #e9f5e9;
+            border: 1px solid #c8e6c9;
+            border-radius: 6px;
+            color: #38761d;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+
+        .instruction code {
+            background-color: #fff;
+            padding: 2px 4px;
+            border-radius: 3px;
+            color: #9c27b0;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Support Us & Earn Rewards!</h1>
+        <p>Click below to open our sponsor's page and help keep this service free.</p>
+
+        <!-- 
+            This is the button. The "a" tag uses target="_blank" to ensure the ad opens 
+            in a new tab, keeping the visitor on your current page.
+        -->
+        <a href="https://terrific-shake.com/dKmSF/z.dmG/Nav/ZEGfUC/OeOmL9ruhZ/U/lbkUPhTyY-2qOLDpk/5/MnzYQ/tRNRjlY_4yOpTFkXz/NzQi" 
+           target="_blank" 
+           class="ad-button">
+            WATCH AD & CONTINUE
+        </a>
+
+       
+     <button onclick="window.location.href='index.html'" class="return-home-btn">
+        Return to Home
+    </button>
+
+</body>
+</html>
