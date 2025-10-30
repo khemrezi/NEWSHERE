@@ -1,0 +1,500 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NewsHere</title>
+  
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <link rel="stylesheet" href="styles.css">
+  
+  <style>@view-transition { navigation: auto; }</style>
+ </head>
+ <body class="min-h-full bg-gray-50 font-sans">
+  
+  <nav class="bg-white shadow-lg sticky top-0 z-50">
+   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+     <div class="flex items-center">
+      <h1 id="site-title" class="text-2xl font-bold text-gray-900">TechHub Pro</h1>
+      <p id="tagline" class="ml-4 text-sm text-gray-600 hidden sm:block">Your Digital Command Center</p>
+     </div>
+     <div class="flex space-x-8">
+      <button onclick="showSection('dashboard')" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50" id="dashboard-nav">Dashboard</button> 
+      <button onclick="showSection('news')" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50" id="news-nav">News</button>
+     </div>
+    </div>
+   </div>
+  </nav>
+  
+  <div class="sections-container relative overflow-hidden">
+   
+   <section id="dashboard-section" class="section-slide py-8 transition-transform duration-500 ease-in-out">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <header class="mb-8">
+      <h2 id="dashboard-title" class="text-3xl font-bold text-gray-900 mb-2">Your Reading Dashboard</h2>
+      <p class="text-gray-600">See how you're doing and what's happening around the world</p>
+     </header>
+     
+     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+      <div class="metric-card text-white p-8 rounded-xl shadow-lg">
+       <div class="flex items-center justify-between mb-4">
+        <div>
+         <p class="text-white/80 text-sm">Articles You've Read</p>
+         <p class="text-3xl font-bold" id="user-articles-read">0</p>
+        </div>
+        <div class="bg-white/20 p-4 rounded-lg">
+         <svg class="w-8 h-8" fill="currentColor" viewbox="0 0 20 20">
+          <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z" />
+         </svg>
+        </div>
+       </div>
+       <div class="flex items-center justify-between">
+        <span class="text-green-200 text-sm" id="articles-trend">📈 Keep reading!</span> 
+        <button onclick="resetUserStats()" class="text-white/60 hover:text-white text-xs px-2 py-1 rounded border border-white/20 hover:border-white/40 transition-colors">Reset</button>
+       </div>
+       <div class="mt-4 bg-white/10 rounded-full h-2">
+        <div id="reading-progress" class="bg-white h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+       </div>
+       <p class="text-white/60 text-xs mt-2">Your progress to the next milestone</p>
+      </div>
+      <div class="metric-card text-white p-8 rounded-xl shadow-lg">
+       <div class="flex items-center justify-between mb-4">
+        <div>
+         <p class="text-white/80 text-sm">Time Spent Reading</p>
+         <p class="text-3xl font-bold" id="user-reading-time">0m</p>
+        </div>
+        <div class="bg-white/20 p-4 rounded-lg">
+         <svg class="w-8 h-8" fill="currentColor" viewbox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
+         </svg>
+        </div>
+       </div>
+       <div class="flex items-center justify-between">
+        <span class="text-blue-200 text-sm" id="time-trend">⏱️ Time well spent!</span>
+        <div class="text-white/60 text-xs">
+         <span id="session-time">Session: 0m</span>
+        </div>
+       </div>
+       <div class="mt-4 grid grid-cols-3 gap-2 text-center">
+        <div class="bg-white/10 rounded p-2">
+         <div class="text-xs text-white/60">Today</div>
+         <div class="font-bold text-sm" id="today-time">0m</div>
+        </div>
+        <div class="bg-white/10 rounded p-2">
+         <div class="text-xs text-white/60">This Week</div>
+         <div class="font-bold text-sm" id="week-time">0m</div>
+        </div>
+        <div class="bg-white/10 rounded p-2">
+         <div class="text-xs text-white/60">Average</div>
+         <div class="font-bold text-sm" id="avg-time">0m</div>
+        </div>
+       </div>
+      </div>
+     </div>
+     
+     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div class="bg-white p-6 rounded-xl shadow-lg">
+       <h3 class="text-lg font-semibold text-gray-900 mb-6">What's Happening Worldwide</h3>
+       <div class="space-y-6">
+        <div class="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 rounded-lg">
+         <div class="flex items-center justify-between mb-2">
+          <span class="text-sm font-medium text-gray-700">People Reading Right Now</span>
+          <div class="flex items-center">
+           <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse mr-2"></div>
+           <span class="text-xs text-green-600">Live</span>
+          </div>
+         </div>
+         <div class="text-3xl font-bold text-indigo-600" id="current-readers">2,847</div>
+         <div class="text-xs text-gray-500 mt-1">+12% from last hour</div>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+         <div class="bg-gray-50 p-4 rounded-lg">
+          <div class="text-sm text-gray-600 mb-1">People Who Read Today</div>
+          <div class="text-xl font-bold text-gray-900" id="daily-readers">18,432</div>
+          <div class="text-xs text-green-600">↗ +8.3%</div>
+         </div>
+         <div class="bg-gray-50 p-4 rounded-lg">
+          <div class="text-sm text-gray-600 mb-1">Stories Read Today</div>
+          <div class="text-xl font-bold text-gray-900" id="articles-read">45,291</div>
+          <div class="text-xs text-blue-600">↗ +15.2%</div>
+         </div>
+        </div>
+        <div class="bg-yellow-50 p-4 rounded-lg">
+         <div class="text-sm text-gray-600 mb-2">What People Love Reading</div>
+         <div class="flex items-center justify-between">
+          <span class="font-semibold text-yellow-800">Technology</span> 
+          <span class="text-sm text-yellow-600">34% of reads</span>
+         </div>
+         <div class="w-full bg-yellow-200 rounded-full h-2 mt-2">
+          <div class="bg-yellow-500 h-2 rounded-full" style="width: 34%"></div>
+         </div>
+        </div>
+       </div>
+      </div>
+      
+      <div class="bg-white p-6 rounded-xl shadow-lg">
+       <h3 class="text-lg font-semibold text-gray-900 mb-4">See Readers Around the World</h3>
+       <div class="relative bg-gradient-to-b from-blue-900 to-black rounded-lg overflow-hidden earth-container">
+        <div class="absolute inset-0 flex items-center justify-center">
+         <div id="earth-container" class="relative">
+          <svg width="280" height="280" viewbox="0 0 280 280" class="animate-spin earth-rotation">
+           <circle cx="140" cy="140" r="130" fill="url(#earthGradient)" stroke="#4A90E2" stroke-width="2" /> 
+           <path d="M60 120 Q80 100 120 110 Q160 105 180 125 Q200 140 190 160 Q170 180 140 175 Q100 170 80 150 Q50 140 60 120" fill="#22C55E" opacity="0.8" /> 
+           <path d="M180 80 Q220 85 240 110 Q250 130 235 150 Q220 165 200 160 Q185 155 180 140 Q175 120 180 100 Q180 90 180 80" fill="#22C55E" opacity="0.8" /> 
+           <path d="M70 180 Q90 175 110 185 Q130 190 125 210 Q120 225 100 230 Q80 225 70 210 Q60 195 70 180" fill="#22C55E" opacity="0.8" /> 
+           <circle cx="100" cy="130" r="3" fill="#FF6B6B" class="activity-dot">
+            <animate attributename="r" values="3;6;3" dur="2s" repeatcount="indefinite" />
+           </circle> 
+           <circle cx="160" cy="110" r="3" fill="#4ECDC4" class="activity-dot activity-dot-delay-1">
+            <animate attributename="r" values="3;6;3" dur="2s" repeatcount="indefinite" />
+           </circle> 
+           <circle cx="200" cy="140" r="3" fill="#45B7D1" class="activity-dot activity-dot-delay-2">
+            <animate attributename="r" values="3;6;3" dur="2s" repeatcount="indefinite" />
+           </circle> 
+           <circle cx="90" cy="200" r="3" fill="#96CEB4" class="activity-dot activity-dot-delay-3">
+            <animate attributename="r" values="3;6;3" dur="2s" repeatcount="indefinite" />
+           </circle> 
+           <defs>
+            <radialgradient id="earthGradient" cx="0.3" cy="0.3">
+             <stop offset="0%" stop-color="#4A90E2" />
+             <stop offset="70%" stop-color="#2563EB" />
+             <stop offset="100%" stop-color="#1E40AF" />
+            </radialgradient>
+           </defs>
+          </svg>
+          <div class="activity-indicator activity-indicator-1">🇺🇸 247 readers</div>
+          <div class="activity-indicator activity-indicator-2">🇬🇧 189 readers</div>
+          <div class="activity-indicator activity-indicator-3">🇯🇵 156 readers</div>
+          <div class="activity-indicator activity-indicator-4">🇦🇺 98 readers</div>
+         </div>
+        </div>
+        <div class="stars-background">
+         <div class="star star-1"></div>
+         <div class="star star-2"></div>
+         <div class="star star-3"></div>
+         <div class="star star-4"></div>
+         <div class="star star-5"></div>
+        </div>
+       </div>
+       <div class="mt-4 text-center">
+        <p class="text-sm text-gray-600 mb-2">Watch people reading stories live around the globe</p>
+        <div class="flex justify-center space-x-4 text-xs text-gray-500">
+         <span>🌍 Live Updates</span> 
+         <span>📊 Real Numbers</span> 
+         <span>🔄 Always Fresh</span>
+        </div>
+       </div>
+      </div>
+     </div>
+     
+     <div class="mt-8 bg-white p-6 rounded-xl shadow-lg">
+      <div class="flex items-center justify-between mb-6">
+       <div>
+        <h3 class="text-lg font-semibold text-gray-900">Got a Story to Share?</h3>
+        <p class="text-sm text-gray-600">Tell the community about something interesting you know</p>
+       </div>
+       <button onclick="toggleNewsForm()" id="toggle-form-btn" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors flex items-center gap-2">
+        <svg class="w-4 h-4" fill="currentColor" viewbox="0 0 20 20">
+         <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+        </svg> Post News 
+       </button>
+      </div>
+      <div id="news-form" class="hidden border-t pt-6">
+       <form id="user-news-form" class="space-y-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+         <div>
+          <label for="news-title-input" class="block text-sm font-medium text-gray-700 mb-2">What's your story about? *</label> 
+          <input type="text" id="news-title-input" required maxlength="100" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Give your story a catchy title">
+          <div class="text-xs text-gray-500 mt-1">Maximum 100 characters</div>
+         </div>
+         <div>
+          <label for="news-category-input" class="block text-sm font-medium text-gray-700 mb-2">What type of story is this? *</label> 
+          <select id="news-category-input" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"> 
+           <option value="">Choose what fits best</option> 
+           <option value="Technology">Technology</option> 
+           <option value="Business">Business</option> 
+           <option value="Science">Science</option> 
+           <option value="Health">Health</option> 
+           <option value="Sports">Sports</option> 
+           <option value="Entertainment">Entertainment</option> 
+           <option value="Education">Education</option> 
+           <option value="Community">Community</option> 
+           <option value="Environment">Environment</option> 
+           <option value="Other">Other</option> 
+          </select>
+         </div>
+        </div>
+        <div>
+         <label for="news-summary-input" class="block text-sm font-medium text-gray-700 mb-2">Tell us the main point *</label> 
+         <textarea id="news-summary-input" required maxlength="300" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="What's the most important thing people should know?"></textarea>
+         <div class="text-xs text-gray-500 mt-1">Maximum 300 characters</div>
+        </div>
+        <div>
+         <label for="news-content-input" class="block text-sm font-medium text-gray-700 mb-2">Share the full story *</label> 
+         <textarea id="news-content-input" required maxlength="2000" rows="6" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Tell us everything! What happened? Why is it interesting?"></textarea>
+         <div class="text-xs text-gray-500 mt-1">Maximum 2000 characters</div>
+        </div>
+        <div>
+         <label for="author-name-input" class="block text-sm font-medium text-gray-700 mb-2">What should we call you? *</label> 
+         <input type="text" id="author-name-input" required maxlength="50" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Your name or nickname">
+         <div class="text-xs text-gray-500 mt-1">Maximum 50 characters</div>
+        </div>
+        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+         <h4 class="text-sm font-semibold text-yellow-800 mb-2">📋 What We're Looking For</h4>
+         <ul class="text-xs text-yellow-700 space-y-1">
+          <li>• Share true stories and real experiences</li>
+          <li>• Keep it friendly and respectful for everyone</li>
+          <li>• No spam or promotional stuff please</li>
+          <li>• Give credit where it's due</li>
+          <li>• Make it interesting for our community</li>
+         </ul>
+        </div>
+        <div class="flex items-center gap-3">
+         <input type="checkbox" id="guidelines-checkbox" required class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"> 
+         <label for="guidelines-checkbox" class="text-sm text-gray-700">I agree to follow these guidelines and confirm this is my original content *</label>
+        </div>
+        <div class="flex gap-3">
+         <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg transition-colors flex items-center gap-2">
+          <svg class="w-4 h-4" fill="currentColor" viewbox="0 0 20 20">
+           <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+          </svg> Share Your Story 
+         </button> 
+         <button type="button" onclick="clearNewsForm()" class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-2 rounded-lg transition-colors"> Clear Form </button>
+        </div>
+       </form>
+      </div>
+      <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+       <div class="bg-blue-50 p-4 rounded-lg text-center">
+        <div class="text-2xl font-bold text-blue-600" id="total-user-news">0</div>
+        <div class="text-sm text-blue-800">Community Stories</div>
+       </div>
+       <div class="bg-green-50 p-4 rounded-lg text-center">
+        <div class="text-2xl font-bold text-green-600" id="approved-news">0</div>
+        <div class="text-sm text-green-800">Shared Today</div>
+       </div>
+       <div class="bg-purple-50 p-4 rounded-lg text-center">
+        <div class="text-2xl font-bold text-purple-600" id="active-contributors">0</div>
+        <div class="text-sm text-purple-800">Active Storytellers</div>
+       </div>
+      </div>
+     </div>
+     
+     <div class="mt-8 bg-white p-6 rounded-xl shadow-lg">
+      <div class="flex items-center justify-between mb-6">
+       <div>
+        <h3 class="text-lg font-semibold text-gray-900">Community Stories</h3>
+        <p class="text-sm text-gray-600">Latest stories from our amazing community members</p>
+       </div>
+       <div class="flex gap-2">
+        <select id="user-news-filter" class="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"> 
+         <option value="">All Categories</option> 
+         <option value="Technology">Technology</option> 
+         <option value="Business">Business</option> 
+         <option value="Science">Science</option> 
+         <option value="Health">Health</option> 
+         <option value="Sports">Sports</option> 
+         <option value="Entertainment">Entertainment</option> 
+         <option value="Education">Education</option> 
+         <option value="Community">Community</option> 
+         <option value="Environment">Environment</option> 
+         <option value="Other">Other</option> 
+        </select> 
+        <select id="user-news-sort" class="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"> 
+         <option value="newest">Newest First</option> 
+         <option value="oldest">Oldest First</option> 
+         <option value="popular">Most Popular</option> 
+        </select>
+       </div>
+      </div>
+      <div id="user-news-grid" class="space-y-4">
+       <div class="text-center py-12 text-gray-500">
+        <svg class="w-16 h-16 mx-auto mb-4 text-gray-300" fill="currentColor" viewbox="0 0 20 20">
+         <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z" clip-rule="evenodd" />
+        </svg>
+        <p class="text-lg font-medium">No community stories yet</p>
+        <p class="text-sm">Be the first to share your story with the community!</p>
+       </div>
+      </div>
+      <div id="load-more-user-news" class="text-center mt-6 hidden">
+       <button onclick="loadMoreUserNews()" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-colors"> Load More Stories </button>
+      </div>
+     </div>
+    </div>
+   </section>
+   
+   <section id="news-section" class="section-slide py-8 transition-transform duration-500 ease-in-out absolute top-0 left-0 w-full transform translate-x-full">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <header class="mb-8">
+      <h2 id="news-title" class="text-3xl font-bold text-gray-900 mb-2">Hot News</h2>
+      <p class="text-gray-600">Stay updated with the hottest trending stories and breaking news</p>
+     </header>
+     
+     <div class="bg-white rounded-xl shadow-lg overflow-hidden mb-8">
+      <div class="md:flex">
+       <div class="md:w-1/3">
+        <img id="hot-news-image" src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&amp;h=400&amp;fit=crop" alt="Hot News" class="w-full h-48 md:h-full object-cover" onerror="this.src=''; this.style.display='none';">
+       </div>
+       <div class="md:w-2/3 p-8">
+        <div class="flex justify-between items-start mb-4">
+         <div class="uppercase tracking-wide text-sm text-red-600 font-semibold flex items-center">🔥 Hot News 2025</div>
+         <button id="update-hot-news-btn" onclick="updateHotNews()" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors flex items-center gap-2 text-sm">
+          <svg id="hot-news-refresh-icon" class="w-4 h-4 transition-transform" fill="currentColor" viewbox="0 0 20 20">
+           <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd" />
+          </svg> Update 
+         </button>
+        </div>
+        <h3 id="hot-news-title" class="text-2xl font-bold text-gray-900 mb-4">Revolutionary AI Technology Transforms Industry Standards in 2025</h3>
+        <p id="hot-news-summary" class="text-gray-600 mb-6">Discover how cutting-edge artificial intelligence is reshaping the way businesses operate, bringing unprecedented efficiency and innovation to traditional workflows in the new year.</p>
+        <div class="flex items-center text-sm text-gray-500 mb-4">
+         <span id="hot-news-date">January 15, 2025</span> 
+         <span class="mx-2">•</span> 
+         <span id="hot-news-read-time">5 min read</span> 
+         <span class="mx-2">•</span> 
+         <span id="hot-news-category" class="px-2 py-1 bg-red-100 text-red-800 rounded-full text-xs">Technology</span>
+        </div>
+        <button onclick="openHotNewsModal()" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-colors">Read More</button>
+       </div>
+      </div>
+     </div>
+     
+     <div class="bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl shadow-lg overflow-hidden mb-8 text-white">
+      <div class="p-8">
+       <div class="flex justify-between items-start mb-4">
+        <div class="flex items-center gap-3">
+         <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
+          <svg class="w-6 h-6" fill="currentColor" viewbox="0 0 20 20">
+           <path d="M10 2L3 7v11a1 1 0 001 1h12a1 1 0 001-1V7l-7-5zM8 15v-3h4v3H8z" />
+          </svg>
+         </div>
+         <div>
+          <h3 class="text-xl font-bold">Weekly Team Update</h3>
+          <p class="text-white/80 text-sm">Fresh insights from our team</p>
+         </div>
+        </div>
+        <span class="bg-white/20 px-3 py-1 rounded-full text-xs font-semibold">Weekly</span>
+       </div>
+       <div id="owner-news-content">
+        <h4 class="text-lg font-semibold mb-3">Platform Enhancement Update - Week of January 13, 2025</h4>
+        <p class="text-white/90 mb-4">This week we've rolled out significant improvements to our dashboard analytics and introduced real-time user engagement tracking. Our new interactive Earth visualization shows global user activity patterns, helping you understand your audience better.</p>
+        <div class="flex items-center text-sm text-white/70">
+         <span>Published: January 13, 2025</span> 
+         <span class="mx-2">•</span> 
+         <span>Next update: January 20, 2025</span>
+        </div>
+       </div>
+      </div>
+     </div>
+     
+     <div class="mb-8 flex flex-col sm:flex-row gap-4">
+      <div class="flex-1">
+       <input type="text" id="news-search" placeholder="Search news..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+      </div>
+      <select id="category-filter" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"> 
+       <option value="">All Categories</option> 
+       <option value="Technology">Technology</option> 
+       <option value="Business">Business</option> 
+       <option value="Science">Science</option> 
+       <option value="Health">Health</option> 
+       <option value="Sports">Sports</option> 
+       <option value="Entertainment">Entertainment</option> 
+       <option value="Politics">Politics</option> 
+       <option value="World">World</option> 
+      </select> 
+      <button id="refresh-news-btn" onclick="refreshNews()" class="px-6 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors flex items-center gap-2">
+       <svg id="refresh-icon" class="w-4 h-4 transition-transform" fill="currentColor" viewbox="0 0 20 20">
+        <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd" />
+       </svg> Refresh 
+      </button>
+     </div>
+     
+     <div id="news-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      </div>
+     
+     <div class="text-center mt-12">
+      <button id="load-more-btn" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg transition-colors"> Load More Articles </button>
+     </div>
+    </div>
+   </section>
+  </div>
+  
+  <footer class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-8 mt-16">
+   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <div class="flex items-center justify-center mb-4">
+     <svg class="w-8 h-8 mr-3 text-yellow-300" fill="currentColor" viewbox="0 0 20 20">
+      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+     </svg>
+     <h3 class="text-2xl font-bold">Coming Soon: Storyteller Rewards!</h3>
+     <svg class="w-8 h-8 ml-3 text-yellow-300" fill="currentColor" viewbox="0 0 20 20">
+      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+     </svg>
+    </div>
+    <p class="text-xl mb-4 text-indigo-100">We're working on something special for our community storytellers!</p>
+    <p class="text-indigo-200 max-w-3xl mx-auto">Get ready to earn rewards for your amazing stories! Our upcoming storyteller reward system will recognize and celebrate community contributors based on story engagement, quality ratings, and reader feedback. Stay tuned for exciting announcements!</p>
+    <div class="mt-6 flex items-center justify-center space-x-8 text-sm text-indigo-200">
+     <div class="flex items-center">
+      <svg class="w-5 h-5 mr-2 text-green-300" fill="currentColor" viewbox="0 0 20 20">
+       <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+      </svg> Quality-based rewards
+     </div>
+     <div class="flex items-center">
+      <svg class="w-5 h-5 mr-2 text-green-300" fill="currentColor" viewbox="0 0 20 20">
+       <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+      </svg> Engagement bonuses
+     </div>
+     <div class="flex items-center">
+      <svg class="w-5 h-5 mr-2 text-green-300" fill="currentColor" viewbox="0 0 20 20">
+       <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+      </svg> Monthly recognition
+     </div>
+    </div>
+   </div>
+  </footer>
+  
+  <div id="news-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+   <div class="bg-white rounded-xl max-w-4xl w-full max-h-full overflow-y-auto">
+    <div class="sticky top-0 bg-white border-b border-gray-200 p-6 flex justify-between items-center">
+     <h3 id="modal-title" class="text-2xl font-bold text-gray-900"></h3>
+     <button onclick="closeNewsModal()" class="text-gray-400 hover:text-gray-600 text-2xl">×</button>
+    </div>
+    <div class="p-6">
+     <img id="modal-image" class="w-full h-64 object-cover rounded-lg mb-6" alt="">
+     <div class="flex items-center text-sm text-gray-500 mb-4">
+      <span id="modal-date"></span> 
+      <span class="mx-2">•</span> 
+      <span id="modal-category" class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs"></span> 
+      <span class="mx-2">•</span> 
+      <span id="modal-read-time"></span>
+     </div>
+     <div id="modal-content" class="prose max-w-none text-gray-700 leading-relaxed"></div>
+    </div>
+   </div>
+  </div>
+  
+  <div id="hot-news-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+   <div class="bg-white rounded-xl max-w-4xl w-full max-h-full overflow-y-auto">
+    <div class="sticky top-0 bg-white border-b border-gray-200 p-6 flex justify-between items-center">
+     <h3 id="hot-modal-title" class="text-2xl font-bold text-gray-900"></h3>
+     <button onclick="closeHotNewsModal()" class="text-gray-400 hover:text-gray-600 text-2xl">×</button>
+    </div>
+    <div class="p-6">
+     <img id="hot-modal-image" class="w-full h-64 object-cover rounded-lg mb-6" alt="">
+     <div class="flex items-center text-sm text-gray-500 mb-4">
+      <span id="hot-modal-date"></span> 
+      <span class="mx-2">•</span> 
+      <span id="hot-modal-category" class="px-2 py-1 bg-red-100 text-red-800 rounded-full text-xs"></span> 
+      <span class="mx-2">•</span> 
+      <span id="hot-modal-read-time"></span>
+     </div>
+     <div id="hot-modal-content" class="prose max-w-none text-gray-700 leading-relaxed"></div>
+    </div>
+   </div>
+  </div>
+  
+  <script src="script.js"></script>
+ </body>
+</html>
