@@ -120,4 +120,7 @@ sharethrough.com, 5926d422, RESELLER, d53b998a7bd4ecd2
 smartadserver.com, 4503-OB, DIRECT, 060d053dcf45cbf3
 smartadserver.com, 4503, DIRECT, 060d053dcf45cbf3
 # 21202
+
 google.com, pub-1447199266636432, DIRECT, f08c47fec0942fa0
+ezoic.ai, 1ebe790b8b06b883899dadd646a4a49e, DIRECT
+ezoic.co.uk, 1ebe790b8b06b883899dadd646a4a49e, DIRECT
