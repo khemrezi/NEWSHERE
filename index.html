@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Global Currency Converter</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link rel="stylesheet" href="styles.css">
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body>
+  <div class="leaderboard-ad">
+   <div class="ad-label">
+    📢 Leaderboard Ad Space<br>
+    728x90
+   </div>
+  </div>
+  <div class="main-wrapper">
+   <div class="ad-space-left">
+    <div class="ad-spacer"></div>
+    <div class="native-ad">
+     <div class="ad-label">
+      📰 Native Ad Space<br>
+      300x250
+     </div>
+    </div>
+    <div class="video-ad">
+     <div class="ad-label">
+      📹 Video Ad Space<br>
+      300x250
+     </div>
+    </div>
+   </div>
+   <div class="container">
+    <div class="header">
+     <h1 class="title" id="mainTitle">Global Currency Converter</h1>
+     <p class="subtitle" id="subtitle">Convert between 150+ world currencies instantly</p>
+    </div>
+    <div class="page-switcher"><button class="page-btn active" id="fiatBtn">Fiat Currencies</button> <button class="page-btn" id="cryptoBtn">Cryptocurrencies</button>
+    </div>
+    <div id="fiatPage" class="page-content active">
+     <div class="converter-section">
+      <div class="input-group"><label for="fromAmount">From</label>
+       <div class="input-wrapper"><input type="number" id="fromAmount" value="1" min="0" step="0.01">
+        <div class="search-wrapper"><input type="text" id="fromSearch" class="search-input" placeholder="Search currency..." autocomplete="off">
+         <div id="fromDropdown" class="search-dropdown"></div>
+        </div>
+       </div>
+      </div>
+      <div class="swap-button"><button class="swap-btn" id="swapBtn" aria-label="Swap currencies">⇅</button>
+      </div>
+      <div class="input-group"><label for="toAmount">To</label>
+       <div class="input-wrapper"><input type="number" id="toAmount" readonly>
+        <div class="search-wrapper"><input type="text" id="toSearch" class="search-input" placeholder="Search currency..." autocomplete="off">
+         <div id="toDropdown" class="search-dropdown"></div>
+        </div>
+       </div>
+      </div><button class="convert-button" id="convertBtn">Convert Currency</button>
+      <div class="loading" id="loading">
+       Converting...
+      </div>
+      <div class="result" id="result">
+       <div class="result-amount" id="resultAmount"></div>
+       <div class="result-text" id="resultText"></div>
+       <div class="exchange-rate" id="exchangeRate"></div>
+      </div>
+     </div>
+    </div>
+    <div id="cryptoPage" class="page-content">
+     <div class="crypto-note">
+      <div style="display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap;"><span>📊 Live cryptocurrency rates</span> <button id="refreshPricesBtn" class="refresh-btn" title="Refresh prices">🔄 Refresh</button> <span id="priceTimestamp" style="font-size: 12px; color: #92400e;">Loading prices...</span>
+      </div>
+     </div>
+     <div class="converter-section">
+      <div class="input-group"><label for="cryptoFromAmount">From</label>
+       <div class="input-wrapper"><input type="number" id="cryptoFromAmount" value="1" min="0" step="0.00000001">
+        <div class="search-wrapper"><input type="text" id="cryptoFromSearch" class="search-input" placeholder="Search crypto..." autocomplete="off">
+         <div id="cryptoFromDropdown" class="search-dropdown"></div>
+        </div>
+       </div>
+      </div>
+      <div class="swap-button"><button class="swap-btn" id="cryptoSwapBtn" aria-label="Swap currencies">⇅</button>
+      </div>
+      <div class="input-group"><label for="cryptoToAmount">To</label>
+       <div class="input-wrapper"><input type="number" id="cryptoToAmount" readonly>
+        <div class="search-wrapper"><input type="text" id="cryptoToSearch" class="search-input" placeholder="Search crypto..." autocomplete="off">
+         <div id="cryptoToDropdown" class="search-dropdown"></div>
+        </div>
+       </div>
+      </div><button class="convert-button" id="cryptoConvertBtn">Convert Crypto</button>
+      <div class="loading" id="cryptoLoading">
+       Converting...
+      </div>
+      <div class="result" id="cryptoResult">
+       <div class="result-amount" id="cryptoResultAmount"></div>
+       <div class="result-text" id="cryptoResultText"></div>
+       <div class="exchange-rate" id="cryptoExchangeRate"></div>
+      </div>
+     </div>
+    </div>
+   </div>
+   <div class="ad-space-right">
+    <div class="ad-spacer"></div>
+    <div class="native-ad">
+     <div class="ad-label">
+      📰 Native Ad Space<br>
+      300x250
+     </div>
+    </div>
+    <div class="video-ad">
+     <div class="ad-label">
+      📹 Video Ad Space<br>
+      300x250
+     </div>
+    </div>
+   </div>
+  </div>
+  <div class="leaderboard-ad">
+   <div class="ad-label">
+    📢 Leaderboard Ad Space<br>
+    728x90
+   </div>
+  </div>
+  <div class="sticky-ad" id="stickyAd"><button class="close-sticky-btn" id="closeStickyBtn" aria-label="Close ad">×</button>
+   <div class="ad-label">
+    📍 Sticky/Anchor Ad<br>
+    728x90
+   </div>
+  </div><!-- JAVASCRIPT GOES HERE -->
+  <script src="script.js"></script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a3016caa7f04990',t:'MTc2Mzg5NDg1Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
