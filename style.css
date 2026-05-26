@@ -1,0 +1,259 @@
+/* Import a highly readable, classic romantic serif font for her name */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,600;1,800&display=swap');
+
+body {
+    background-color: #E6E6FA; /* Light Purple */
+    font-family: 'Comic Sans MS', 'Segoe UI', cursive, sans-serif;
+    color: #4A235A;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+    text-align: center;
+}
+
+/* Side Heart Panels Design */
+.side-decorations {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.decor-left {
+    position: absolute;
+    left: 4%;
+    top: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.decor-right {
+    position: absolute;
+    right: 4%;
+    top: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.decor-left span, .decor-right span {
+    font-size: 2.2rem;
+    filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.1));
+    animation: heartbeatFloat 3.5s infinite ease-in-out;
+}
+
+.decor-left span:nth-child(even), .decor-right span:nth-child(odd) {
+    animation-delay: 1.75s;
+    font-size: 1.6rem;
+}
+
+@keyframes heartbeatFloat {
+    0% { transform: translateY(0px) scale(1); }
+    50% { transform: translateY(-15px) scale(1.15); }
+    100% { transform: translateY(0px) scale(1); }
+}
+
+/* Falling Mini Stars Container */
+#star-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 2;
+    overflow: hidden;
+}
+
+.star {
+    position: absolute;
+    color: #FFF;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+    pointer-events: none;
+    animation: fall linear forwards;
+}
+
+@keyframes fall {
+    0% {
+        transform: translateY(-20px) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.8;
+    }
+    90% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(105vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+.screen {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    max-width: 800px;
+    z-index: 10;
+}
+
+.active {
+    display: flex;
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+.btn {
+    background-color: #D2B4DE;
+    border: 2px solid #BB8FCE;
+    padding: 15px 30px;
+    margin: 10px;
+    border-radius: 25px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #4A235A;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background-color: #BB8FCE;
+    color: white;
+}
+
+/* Modal Styling */
+.modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #F4ECF7;
+    padding: 30px;
+    border: 3px solid #AF7AC5;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    z-index: 100;
+}
+
+.modal.active {
+    display: block;
+}
+
+.remark {
+    font-size: 0.9rem;
+    color: #884EA0;
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+/* Floating Ocean Waves Texts */
+.floating-text {
+    position: absolute;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #AF7AC5;
+    opacity: 0.8;
+    animation: wave 4s infinite ease-in-out;
+}
+
+@keyframes wave {
+    0% { transform: translateY(0px) translateX(0px) rotate(0deg); }
+    50% { transform: translateY(-30px) translateX(20px) rotate(10deg); }
+    100% { transform: translateY(0px) translateX(0px) rotate(0deg); }
+}
+
+/* Letter Container */
+.letter-container {
+    height: 85vh;
+    overflow-y: auto;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 15px;
+}
+
+.letter {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    text-align: justify;
+    margin-bottom: 20px;
+}
+
+/* Countdown */
+#counter {
+    font-size: 10rem;
+    font-weight: bold;
+    color: #8E44AD;
+}
+
+/* Growing Boom Text Styling */
+#boom-container {
+    display: none;
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+}
+
+.boom-text-style {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.1);
+    font-size: 5rem;
+    font-weight: bold;
+    color: #8E44AD;
+    white-space: nowrap;
+    opacity: 0;
+}
+
+.animate-boom {
+    animation: growAndBoom 2s forwards ease-in;
+}
+
+@keyframes growAndBoom {
+    0% { transform: translate(-50%, -50%) scale(0.1); opacity: 1; }
+    75% { transform: translate(-50%, -50%) scale(3); opacity: 1; }
+    100% { transform: translate(-50%, -50%) scale(8); opacity: 0; }
+}
+
+/* New Super Readable Lovely Word Styling */
+.lovely-text {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-weight: 800;
+    font-size: 4.5rem;
+    color: #6C3483;
+    margin-top: 15px;
+    letter-spacing: 2px;
+    text-shadow: 2px 3px 6px rgba(108, 52, 131, 0.15);
+}
+
+/* Analytics Box */
+.analytics {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid #BB8FCE;
+    margin-top: 20px;
+    text-align: left;
+}
+.analytics li {
+    margin-bottom: 10px;
+    color: #C0392B;
+}

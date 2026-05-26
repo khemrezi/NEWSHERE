@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Anniversary Bebe</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="side-decor" class="side-decorations">
+        <div class="decor-left">
+            <span>💜</span>
+            <span>🤍</span>
+            <span>💜</span>
+            <span>🤍</span>
+            <span>💜</span>
+        </div>
+        <div class="decor-right">
+            <span>🤍</span>
+            <span>💜</span>
+            <span>🤍</span>
+            <span>💜</span>
+            <span>🤍</span>
+        </div>
+    </div>
+
+    <div id="star-container"></div>
+
+    <div id="screen1" class="screen active">
+        <h1 id="q1-text">YOU ARE MY CUTIE GF, RIGHT?</h1>
+        <div id="s1-buttons">
+            <button class="btn" onclick="sayYes1()">Yes</button>
+            <button class="btn" onclick="sayNo1()">No</button>
+        </div>
+        <button id="dig-in-btn" class="btn" style="display:none;" onclick="startFloating()">let's dig in bebe</button>
+    </div>
+
+    <div id="modal1" class="modal">
+        <h2>hmmm i see, you sure?</h2>
+        <button class="btn" onclick="closeModal1()">Yes</button>
+        <button class="btn" onclick="closeModal1()">No</button>
+        <p class="remark">YOUR ANSWER WILL BE SEND TO KHEMRA, SO CHOOSE WHATEVER YOU WANT</p>
+    </div>
+
+    <div id="screen2" class="screen"></div>
+
+    <div id="screen3" class="screen">
+        <div class="letter-container">
+            <div id="letter-body"></div>
+            <button id="end-letter-btn" class="btn" style="display:none;" onclick="startCountdown()">EHEHEHEHH CLICK IT</button>
+        </div>
+    </div>
+
+    <div id="screen4" class="screen">
+        <div id="counter">10</div>
+        <div id="boom-container"></div>
+    </div>
+
+    <div id="screen5" class="screen">
+        <h1 id="quiz-q"></h1>
+        <div>
+            <button class="btn" onclick="answerYes()">Yes</button>
+            <button class="btn" onclick="answerNo()">No</button>
+        </div>
+        <p class="remark">choose whatever you want and the answer will send to Khemra</p>
+    </div>
+
+    <div id="modal-quiz" class="modal">
+        <h2>Are you sure?</h2>
+        <button class="btn" onclick="confirmNo()">Yes</button>
+        <button class="btn" onclick="cancelNo()">No</button>
+        <p class="remark">choose whatever you want and the answer will send to Khemra</p>
+    </div>
+
+    <div id="screen6" class="screen">
+        <h1 id="final-msg"></h1>
+        <h2 id="gf-name" class="lovely-text"></h2>
+        <div id="analytics-box" class="analytics" style="display:none;">
+            <h3>oh i see... You said no to:</h3>
+            <ul id="no-list"></ul>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
